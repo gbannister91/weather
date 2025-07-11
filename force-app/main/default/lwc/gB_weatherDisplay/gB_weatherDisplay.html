@@ -1,0 +1,62 @@
+<template>
+    <lightning-card title="Current Weather" icon-name="utility:forecast">
+        <template lwc:if={weatherUnavailable}>
+            Weather Unavailable
+        </template>
+        <template lwc:else>
+            <div class="slds-p-around_medium">
+                <template lwc:if={isLoading}>
+                    <div class="slds-align_absolute-center slds-m-vertical_medium">
+                        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <div class="slds-grid slds-wrap slds-grid_align-center">
+                        <!-- Weather Icon -->
+                        <div class="slds-col slds-size_1-of-3 slds-text-align_center">
+                            <img src={iconURL}/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <div class="slds-grid slds-grid_vertical">
+                                <div class="slds-text-title">
+                                    <lightning-formatted-number
+                                    value={temperature}
+                                    style="font-weight: bold; font-size: 1rem;"
+                                    ></lightning-formatted-number> °C
+                                </div>
+                                <div class="slds-p-top_x-small">
+                                    <lightning-formatted-text
+                                    value={description}
+                                    ></lightning-formatted-text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <div class="slds-m-top_medium slds-text-align_right">
+                                <template lwc:if={isRefreshing}>
+                                    <lightning-icon
+                                    icon-name="utility:spinner"
+                                    size="x-small"
+                                    class="slds-button__icon slds-button__icon_left slds-animate_spin"
+                                    ></lightning-icon>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-button-icon
+                                        alternative-text="Refresh"
+                                        variant="bare"
+                                        type="button"
+                                        icon-name="utility:refresh"
+                                        size="large"
+                                        onclick={refreshWeather}
+                                    >
+                                    </lightning-button-icon>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </lightning-card>
+    
+</template>
